@@ -35,6 +35,7 @@
       font-size: 3.2rem;
       background: -webkit-linear-gradient(45deg, #3273dc, #6c5ce7);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
       line-height: 1.2;
@@ -51,6 +52,56 @@
         display: inline-block;
         margin: 0 5px;
     }
+
+    /* Image Hover Effect */
+    .qualitative-comparison-container img {
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .qualitative-comparison-container img:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    /* Hover Preview Centered */
+    #hover-preview {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2147483647; /* Max Z-Index */
+        background-color: rgba(0, 0, 0, 0.85);
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        cursor: zoom-out;
+        animation: fadeIn 0.2s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    #hover-preview img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      pointer-events: auto;
+      animation: zoomIn 0.2s ease;
+    }
+    
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+
 
     .author-block a {
         color: #3273dc;
@@ -293,12 +344,14 @@
       <h2 class="section-title">Abstract</h2>
       <div class="abstract-text">
         <p>
-          Multi-turn GUI agents enable complex task completion through sequential decision-making, but suffer from severe context inflation as interaction history accumulates. 
+          Multi-turn GUI agents enable complex task completion through sequential decision-making, but suffer from severe context inflation as interaction history accumulates.
           Existing strategies either sacrifice long-term context via truncation or compromise spatial structure through token pruning.
-          In this paper, we propose <b>C</b>onverging <b>C</b>ompression <b>P</b>olicy <b>O</b>ptimization <b>(CCPO)</b>, a unified reinforcement learning framework that couples visual compression with policy optimization for multi-turn GUI agents. CCPO introduces <b>C</b>oodinate-<b>A</b>ware <b>S</b>patial Compression <b>(CASC)</b>, which constructs adaptive attention boundaries from successful interaction experiences across multiple rollout trajectories. 
-          By aggregating coordinates from predictions and references, CASC captures the action-relevant regions that progressively converge toward key screen regions. This mechanism creates a virtuous cycle where focused inputs facilitate precise predictions, subsequently tightening the spatial boundaries for future steps.
-          We further design a Coordinate-Aware Reward Function that provides fine-grained learning signals based on spatial precision rather than binary correctness, improving both grounding accuracy and compression quality.
-          Extensive experiments demonstrate that CCPO achieves state-of-the-art performance across three benchmark datasets.
+          <!-- In this paper, we propose <b>C</b>onverging <b>C</b>ompression <b>P</b>olicy <b>O</b>ptimization <b>(CCPO)</b>, a unified reinforcement learning framework that couples visual compression with policy optimization for multi-turn GUI agents. CCPO introduces <b>C</b>oodinate-<b>A</b>ware <b>S</b>patial Compression <b>(CASC)</b>, which constructs adaptive attention boundaries from successful interaction experiences across multiple rollout trajectories.  -->
+          In this paper, we propose <b>C</b>oordinate <b>C</b>ompression <b>P</b>olicy <b>O</b>ptimization <b>(CCPO)</b>, an efficient policy optimization framework that couples visual compression with policy optimization for multi-turn GUI agents.
+          CCPO introduces <b>C</b>oordinate-<b>A</b>ware <b>S</b>patial <b>C</b>ompression <b>(CASC)</b>, which aggregates coordinates from multiple rollouts to capture target-relevant regions and progressively narrow historical attention around key visual areas. From interactions across rollouts, CASC adaptively constructs attention boundaries that concentrate computation on the most informative regions of the scene.
+          <!-- By aggregating coordinates from predictions and references, CASC captures the action-relevant regions that progressively converge toward key screen regions. This mechanism creates a virtuous cycle where focused inputs facilitate precise predictions, subsequently tightening the spatial boundaries for future steps. -->
+          We further design a Distance-Based Advantage that provides fine-grained learning signals based on distance rather than binary correctness, improving both grounding accuracy and compression quality.
+          Extensive experiments demonstrate that CCPO achieves SOTA performance across four benchmarks with up to <span style="color: #3273dc; font-weight: bold;">55%</span> token compression and <span style="color: #3273dc; font-weight: bold;">3.8 ×</span> training speedup.
         </p>
       </div>
     </div>
@@ -351,42 +404,30 @@
       </div>
     </div> -->
 
-    <!-- Qualitative Comparison -->
-    <div class="content-block">
-      <h3 class="title is-4">Qualitative Comparison</h3>
-      <div class="has-text-centered">
-        <img src="img/visual_comparison.png" alt="Qualitative Comparison" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <p class="content has-text-centered" style="margin-top: 10px;">
-          <strong>Figure 3.</strong> Qualitative comparison of our method against baselines.
-        </p>
-      </div>
-    </div>
-
     <!-- Visualizations -->
     <div class="content-block">
       <h3 class="title is-4">Coordinate-Based Actions Distribution for Three Datasets</h3>
-      <div class="columns is-centered">
+      <div class="columns is-centered qualitative-comparison-container">
         <div class="column has-text-centered">
           <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/GUI_Odyessy.png" alt="GUI Odyssey" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <img src="img/GUI_O_distribution.png" alt="GUI Odyssey" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           </div>
           <p class="is-size-6 has-text-weight-bold mt-2">GUI Odyssey</p>
         </div>
         <div class="column has-text-centered">
           <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/AITW.png" alt="AITW" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <img src="img/AITW_distribution.png" alt="AITW" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           </div>
           <p class="is-size-6 has-text-weight-bold mt-2">AITW</p>
         </div>
         <div class="column has-text-centered">
           <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/AC.png" alt="Android Control" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <img src="img/AC_distribution.png" alt="Android Control" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           </div>
           <p class="is-size-6 has-text-weight-bold mt-2">Android Control</p>
         </div>
       </div>
     </div>
-
 
     <!-- Training Efficiency -->
     <div class="content-block">
@@ -403,63 +444,100 @@
             </tr>
           </thead>
           <tbody>
+            <!-- SO-RL-3B -->
             <tr>
-              <td rowspan="2" style="vertical-align: middle;">SO-RL-7B</td>
-              <td class="has-text-centered">1AO</td>
-              <td class="has-text-centered">7888</td>
-              <td class="has-text-centered">0.0%</td>
-              <td class="has-text-centered">649</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">11372</td>
-              <td class="has-text-centered">0.0%</td>
-              <td class="has-text-centered">982</td>
-            </tr>
-            <tr style="border-bottom: 2px solid #dbdbdb;">
               <td rowspan="2" style="vertical-align: middle;">SO-RL-3B</td>
               <td class="has-text-centered">1AO</td>
-              <td class="has-text-centered">7384</td>
+              <td class="has-text-centered">6998</td>
               <td class="has-text-centered">0.0%</td>
-              <td class="has-text-centered">437</td>
+              <td class="has-text-centered">515</td>
             </tr>
             <tr>
               <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">10830</td>
+              <td class="has-text-centered">9888</td>
               <td class="has-text-centered">0.0%</td>
-              <td class="has-text-centered">671</td>
+              <td class="has-text-centered">660</td>
             </tr>
-            
-            <tr style="background-color: #e3f2fd;">
-              <td rowspan="2" style="vertical-align: middle;"><b>CCPO-7B</b></td>
-              <td class="has-text-centered">1AO</td>
-              <td class="has-text-centered">4262</td>
-              <td class="has-text-centered">46.0%</td>
-              <td class="has-text-centered">186 <span style="font-size: 0.8em; color: teal;">(3.5×)</span></td>
-            </tr>
-            <tr style="background-color: #e3f2fd;">
-              <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">4473</td>
-              <td class="has-text-centered">60.7%</td>
-              <td class="has-text-centered">204 <span style="font-size: 0.8em; color: teal;">(4.8×)</span></td>
-            </tr>
+
+            <!-- CCPO-3B -->
             <tr style="background-color: #e3f2fd;">
               <td rowspan="2" style="vertical-align: middle;"><b>CCPO-3B</b></td>
               <td class="has-text-centered">1AO</td>
               <td class="has-text-centered">4271</td>
-              <td class="has-text-centered">42.2%</td>
-              <td class="has-text-centered">154 <span style="font-size: 0.8em; color: teal;">(2.9×)</span></td>
+              <td class="has-text-centered">38.9%</td>
+              <td class="has-text-centered">154 <span style="font-size: 0.8em; color: teal;">(3.3×)</span></td>
+            </tr>
+            <tr style="background-color: #e3f2fd; border-bottom: 2px solid #dbdbdb;">
+              <td class="has-text-centered">3AO</td>
+              <td class="has-text-centered">4460</td>
+              <td class="has-text-centered"><b>54.9%</b></td>
+              <td class="has-text-centered">174 <span style="font-size: 0.8em; color: teal;"><b>(3.8×)</b></span></td>
+            </tr>
+
+            <!-- SO-RL-7B -->
+            <tr>
+              <td rowspan="2" style="vertical-align: middle;">SO-RL-7B</td>
+              <td class="has-text-centered">1AO</td>
+              <td class="has-text-centered">7026</td>
+              <td class="has-text-centered">0.0%</td>
+              <td class="has-text-centered">569</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">3AO</td>
+              <td class="has-text-centered">9550</td>
+              <td class="has-text-centered">0.0%</td>
+              <td class="has-text-centered">717</td>
+            </tr>
+
+            <!-- CCPO-7B -->
+            <tr style="background-color: #e3f2fd;">
+              <td rowspan="2" style="vertical-align: middle;"><b>CCPO-7B</b></td>
+              <td class="has-text-centered">1AO</td>
+              <td class="has-text-centered">4262</td>
+              <td class="has-text-centered">39.3%</td>
+              <td class="has-text-centered">186 <span style="font-size: 0.8em; color: teal;">(3.1×)</span></td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">4460</td>
-              <td class="has-text-centered">58.8%</td>
-              <td class="has-text-centered">174 <span style="font-size: 0.8em; color: teal;">(3.9×)</span></td>
+              <td class="has-text-centered">4473</td>
+              <td class="has-text-centered"><b>53.2%</b></td>
+              <td class="has-text-centered">204 <span style="font-size: 0.8em; color: teal;"><b>(3.5×)</b></span></td>
             </tr>
           </tbody>
         </table>
         <p>
           <strong>Table 1.</strong> The training efficiency comparison between CCPO and Semi-Online RL on Android Control dataset.
+        </p>
+      </div>
+
+      <!-- Table 2 -->
+      <div class="table-container" style="margin-top: 2rem;">
+        <table class="table is-fullwidth is-hoverable is-striped">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th class="has-text-centered">Compute Load<br>(TFLOPS) ↓</th>
+              <th class="has-text-centered">Token Latency<br>(ms) ↓</th>
+              <th class="has-text-centered">Step Latency<br>(s) ↓</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SO-RL</td>
+              <td class="has-text-centered">9.6</td>
+              <td class="has-text-centered">0.064</td>
+              <td class="has-text-centered">297.1</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO</b></td>
+              <td class="has-text-centered">5.4 <span style="font-size: 0.8em; color: teal;">(-44%)</span></td>
+              <td class="has-text-centered"><b>0.057</b> <span style="font-size: 0.8em; color: teal;">(-10%)</span></td>
+              <td class="has-text-centered"><b>194.5</b> <span style="font-size: 0.8em; color: teal;">(-35%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="has-text-centered" style="margin-top: 10px;">
+          <strong>Table 2.</strong> Training efficiency comparison in terms of compute load and latency.
         </p>
       </div>
     </div>
@@ -608,9 +686,9 @@
               <td class="has-text-centered">83.7</td>
               <td class="has-text-centered"><b>80.5</b></td>
               <td class="has-text-centered"><u>72.5</u></td>
-              <td class="has-text-centered">94.6</td>
-              <td class="has-text-centered">90.1</td>
-              <td class="has-text-centered">87.0</td>
+              <td class="has-text-centered"><b>94.6</b></td>
+              <td class="has-text-centered"><b>90.1</b></td>
+              <td class="has-text-centered"><b>87.0</b></td>
             </tr>
             <tr>
               <td>UI-S1-7B</td>
@@ -630,9 +708,9 @@
             <tr>
               <td><b>Qwen2.5VL-3B</b> (0-shot)</td>
               <td class="has-text-centered"><i>AO</i></td>
-              <td class="has-text-centered">24.91</td>
-              <td class="has-text-centered">68.28</td>
-              <td class="has-text-centered">20.18</td>
+              <td class="has-text-centered">24.9</td>
+              <td class="has-text-centered">68.3</td>
+              <td class="has-text-centered">20.2</td>
               <td class="has-text-centered">27.8</td>
               <td class="has-text-centered">46.4</td>
               <td class="has-text-centered">14.7</td>
@@ -640,19 +718,19 @@
             <tr>
               <td style="padding-left: 2em;">w/ SFT</td>
               <td class="has-text-centered"><i>AO</i></td>
-              <td class="has-text-centered">85.24</td>
-              <td class="has-text-centered">73.45</td>
-              <td class="has-text-centered">68.61</td>
-              <td class="has-text-centered">82.9</td>
-              <td class="has-text-centered">82.9</td>
-              <td class="has-text-centered">71.5</td>
+              <td class="has-text-centered">85.2</td>
+              <td class="has-text-centered">73.5</td>
+              <td class="has-text-centered">68.6</td>
+              <td class="has-text-centered">88.0</td>
+              <td class="has-text-centered">84.3</td>
+              <td class="has-text-centered">75.9</td>
             </tr>
             <tr>
               <td style="padding-left: 2em;">w/ Semi-online RL</td>
               <td class="has-text-centered"><i>AO</i></td>
-              <td class="has-text-centered">82.16</td>
-              <td class="has-text-centered">74.09</td>
-              <td class="has-text-centered">62.94</td>
+              <td class="has-text-centered">83.7</td>
+              <td class="has-text-centered">74.8</td>
+              <td class="has-text-centered">67.5</td>
               <td class="has-text-centered">82.6</td>
               <td class="has-text-centered">81.3</td>
               <td class="has-text-centered">71.3</td>
@@ -660,19 +738,73 @@
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B-1AO</b></td>
               <td class="has-text-centered"><i>AO</i></td>
-              <td class="has-text-centered">85.72</td>
-              <td class="has-text-centered">76.72</td>
-              <td class="has-text-centered">70.60</td>
-              <td class="has-text-centered">85.5</td>
-              <td class="has-text-centered">82.7</td>
-              <td class="has-text-centered">71.8</td>
+              <td class="has-text-centered">85.3</td>
+              <td class="has-text-centered">76.7</td>
+              <td class="has-text-centered">70.6</td>
+              <td class="has-text-centered">91.9</td>
+              <td class="has-text-centered">87.2</td>
+              <td class="has-text-centered">81.1</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B-3AO</b></td>
               <td class="has-text-centered"><i>AO</i></td>
-              <td class="has-text-centered">85.33</td>
-              <td class="has-text-centered">77.49</td>
-              <td class="has-text-centered">70.79</td>
+              <td class="has-text-centered">85.7</td>
+              <td class="has-text-centered">77.5</td>
+              <td class="has-text-centered">70.8</td>
+              <td class="has-text-centered">90.6</td>
+              <td class="has-text-centered">88.5</td>
+              <td class="has-text-centered">80.9</td>
+            </tr>
+            <tr>
+              <td><b>Qwen2.5VL-7B</b> (0-shot)</td>
+              <td class="has-text-centered"><i>AO</i></td>
+              <td class="has-text-centered">58.9</td>
+              <td class="has-text-centered">70.3</td>
+              <td class="has-text-centered">44.1</td>
+              <td class="has-text-centered">55.8</td>
+              <td class="has-text-centered">50.8</td>
+              <td class="has-text-centered">31.8</td>
+            </tr>
+            <tr>
+              <td style="padding-left: 2em;">w/ SFT</td>
+              <td class="has-text-centered"><i>AO</i></td>
+              <td class="has-text-centered">85.9</td>
+              <td class="has-text-centered">75.9</td>
+              <td class="has-text-centered">70.6</td>
+              <td class="has-text-centered">88.0</td>
+              <td class="has-text-centered">84.6</td>
+              <td class="has-text-centered">76.0</td>
+            </tr>
+            <tr>
+              <td style="padding-left: 2em;">w/ Semi-online RL</td>
+              <td class="has-text-centered"><i>AO</i></td>
+              <td class="has-text-centered">86.3</td>
+              <td class="has-text-centered">76.7</td>
+              <td class="has-text-centered">70.6</td>
+              <td class="has-text-centered">90.8</td>
+              <td class="has-text-centered">86.3</td>
+              <td class="has-text-centered">79.4</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B-1AO</b></td>
+              <td class="has-text-centered"><i>AO</i></td>
+              <td class="has-text-centered"><u>86.4</u></td>
+              <td class="has-text-centered">78.8</td>
+              <td class="has-text-centered">72.2</td>
+              <td class="has-text-centered">91.1</td>
+              <td class="has-text-centered">87.2</td>
+              <td class="has-text-centered">80.3</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B-3AO</b></td>
+              <td class="has-text-centered"><i>AO</i></td>
+              <td class="has-text-centered"><b>86.9</b></td>
+              <td class="has-text-centered"><u>79.7</u></td>
+              <td class="has-text-centered"><b>73.3</b></td>
+              <td class="has-text-centered"><u>91.8</u></td>
+              <td class="has-text-centered"><u>89.3</u></td>
+              <td class="has-text-centered"><u>82.4</u></td>
+            <!-- </tr>
               <td class="has-text-centered">89.6</td>
               <td class="has-text-centered">83.0</td>
               <td class="has-text-centered">76.2</td>
@@ -726,11 +858,11 @@
               <td class="has-text-centered">90.5</td>
               <td class="has-text-centered">87.9</td>
               <td class="has-text-centered">80.1</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
         <p class="content has-text-centered">
-          <strong>Table 2.</strong> Results of our CCPO model on the Android Control and GUI-Odyssey navigation tasks. In the History format, AOT means the model includes <strong>A</strong>ction, <strong>O</strong>bservation, and <strong>T</strong>hought history, respectively.
+          <strong>Table 3.</strong> Results of our CCPO model on the Android Control and GUI-Odyssey navigation tasks. In the History format, AOT means the model includes <strong>A</strong>ction, <strong>O</strong>bservation, and <strong>T</strong>hought history, respectively.
         </p>
       </div>
     </div>
@@ -842,61 +974,61 @@
             <tr style="border-top: 2px solid #dbdbdb;">
               <td><b>Qwen2.5-VL-3B</b> w/ SFT</td>
               <td class="has-text-centered">3B</td>
-              <td class="has-text-centered">52.01</td>
-              <td class="has-text-centered">46.49</td>
-              <td class="has-text-centered">48.69</td>
-              <td class="has-text-centered">70.79</td>
-              <td class="has-text-centered">78.42</td>
+              <td class="has-text-centered">52.0</td>
+              <td class="has-text-centered">46.5</td>
+              <td class="has-text-centered">48.7</td>
+              <td class="has-text-centered">70.8</td>
+              <td class="has-text-centered">78.4</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B 1AO</b></td>
               <td class="has-text-centered">3B</td>
-              <td class="has-text-centered"><u>54.55</u></td>
-              <td class="has-text-centered"><b>50.62</b></td>
-              <td class="has-text-centered"><b>50.58</b></td>
-              <td class="has-text-centered">71.83</td>
-              <td class="has-text-centered">79.71</td>
+              <td class="has-text-centered">54.6</td>
+              <td class="has-text-centered">50.6</td>
+              <td class="has-text-centered">50.6</td>
+              <td class="has-text-centered">71.8</td>
+              <td class="has-text-centered">79.7</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B 3AO</b></td>
               <td class="has-text-centered">3B</td>
-              <td class="has-text-centered"><b>55.04</b></td>
-              <td class="has-text-centered"><u>48.02</u></td>
-              <td class="has-text-centered"><u>48.97</u></td>
-              <td class="has-text-centered">73.09</td>
-              <td class="has-text-centered">80.42</td>
+              <td class="has-text-centered">56.5</td>
+              <td class="has-text-centered">51.0</td>
+              <td class="has-text-centered">51.8</td>
+              <td class="has-text-centered">73.1</td>
+              <td class="has-text-centered">80.4</td>
             </tr>
             <tr style="border-top: 2px solid #dbdbdb;">
               <td><b>Qwen2.5-VL-7B</b> w/ SFT</td>
               <td class="has-text-centered">7B</td>
-              <td class="has-text-centered"><u>55.31</u></td>
-              <td class="has-text-centered">52.10</td>
-              <td class="has-text-centered"><u>53.84</u></td>
-              <td class="has-text-centered">72.31</td>
-              <td class="has-text-centered"><u>81.24</u></td>
+              <td class="has-text-centered">55.6</td>
+              <td class="has-text-centered">51.3</td>
+              <td class="has-text-centered">52.0</td>
+              <td class="has-text-centered">72.3</td>
+              <td class="has-text-centered">80.2</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-7B-1AO</b></td>
               <td class="has-text-centered">7B</td>
-              <td class="has-text-centered">55.23</td>
-              <td class="has-text-centered"><u>53.43</u></td>
-              <td class="has-text-centered">52.57</td>
-              <td class="has-text-centered"><u>73.46</u></td>
-              <td class="has-text-centered">80.98</td>
+              <td class="has-text-centered"><u>58.0</u></td>
+              <td class="has-text-centered"><u>53.4</u></td>
+              <td class="has-text-centered"><u>55.7</u></td>
+              <td class="has-text-centered"><u>73.5</u></td>
+              <td class="has-text-centered"><u>81.0</u></td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-7B-3AO</b></td>
               <td class="has-text-centered">7B</td>
-              <td class="has-text-centered"><b>59.51</b></td>
-              <td class="has-text-centered"><b>53.65</b></td>
-              <td class="has-text-centered"><b>56.49</b></td>
-              <td class="has-text-centered"><b>74.37</b></td>
-              <td class="has-text-centered"><b>81.38</b></td>
+              <td class="has-text-centered"><b>59.5</b></td>
+              <td class="has-text-centered"><b>53.6</b></td>
+              <td class="has-text-centered"><b>56.5</b></td>
+              <td class="has-text-centered"><b>74.4</b></td>
+              <td class="has-text-centered"><b>81.4</b></td>
             </tr>
           </tbody>
         </table>
         <p class="content has-text-centered">
-          <strong>Table 3.</strong> Results of CCPO-MAX on the Mind2Web and AITW benchmark.
+          <strong>Table 4.</strong> Results of CCPO on the Mind2Web and AITW benchmarks across different settings.
         </p>
       </div>
     </div>
@@ -1009,37 +1141,107 @@
               <td class="has-text-centered">73.3</td>
               <td class="has-text-centered">--</td>
             </tr>
-            <tr style="border-top: 2px solid #dbdbdb;">
+            <tr style=="background-color: #e3f2fd;">
               <td><b>Qwen2.5-VL-3B</b> w/ SFT</td>
-              <td class="has-text-centered">61.52</td>
-              <td class="has-text-centered">75.35</td>
-              <td class="has-text-centered">67.22</td>
-              <td class="has-text-centered">75.81</td>
-              <td class="has-text-centered">74.05</td>
-              <td class="has-text-centered">70.79</td>
-              <td class="has-text-centered">78.42</td>
+              <td class="has-text-centered">61.5</td>
+              <td class="has-text-centered">75.4</td>
+              <td class="has-text-centered">67.2</td>
+              <td class="has-text-centered">75.8</td>
+              <td class="has-text-centered">74.1</td>
+              <td class="has-text-centered">70.8</td>
+              <td class="has-text-centered">78.4</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-3B 1AO</b> w/o CR</td>
+              <td class="has-text-centered">62.7</td>
+              <td class="has-text-centered">78.2</td>
+              <td class="has-text-centered">65.1</td>
+              <td class="has-text-centered">75.5</td>
+              <td class="has-text-centered">76.4</td>
+              <td class="has-text-centered">71.6</td>
+              <td class="has-text-centered">79.1</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B 1AO</b></td>
-              <td class="has-text-centered">64.25</td>
-              <td class="has-text-centered">76.07</td>
-              <td class="has-text-centered">67.22</td>
-              <td class="has-text-centered">76.14</td>
-              <td class="has-text-centered">75.44</td>
-              <td class="has-text-centered">71.83</td>
-              <td class="has-text-centered">79.71</td>
+              <td class="has-text-centered">64.3</td>
+              <td class="has-text-centered">76.1</td>
+              <td class="has-text-centered">67.2</td>
+              <td class="has-text-centered">76.1</td>
+              <td class="has-text-centered">75.4</td>
+              <td class="has-text-centered">71.8</td>
+              <td class="has-text-centered">79.7</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-3B 3AO</b> w/o CR</td>
+              <td class="has-text-centered">65.2</td>
+              <td class="has-text-centered">79.2</td>
+              <td class="has-text-centered">66.6</td>
+              <td class="has-text-centered">76.5</td>
+              <td class="has-text-centered">75.8</td>
+              <td class="has-text-centered">72.7</td>
+              <td class="has-text-centered">80.0</td>
             </tr>
             <tr style="background-color: #e3f2fd;">
               <td><b>CCPO-3B 3AO</b></td>
-              <td class="has-text-centered">65.32</td>
-              <td class="has-text-centered">77.49</td>
-              <td class="has-text-centered">68.30</td>
-              <td class="has-text-centered"><b>78.29</b></td>
-              <td class="has-text-centered">76.04</td>
-              <td class="has-text-centered">73.09</td>
-              <td class="has-text-centered">80.42</td>
+              <td class="has-text-centered">65.3</td>
+              <td class="has-text-centered">77.5</td>
+              <td class="has-text-centered">68.3</td>
+              <td class="has-text-centered"><b>78.3</b></td>
+              <td class="has-text-centered">76.0</td>
+              <td class="has-text-centered">73.1</td>
+              <td class="has-text-centered">80.4</td>
             </tr>
             <tr style="border-top: 2px solid #dbdbdb;">
+              <td><b>Qwen2.5-VL-7B</b> w/ SFT</td>
+              <td class="has-text-centered">64.8</td>
+              <td class="has-text-centered">77.5</td>
+              <td class="has-text-centered">68.5</td>
+              <td class="has-text-centered">76.9</td>
+              <td class="has-text-centered">73.9</td>
+              <td class="has-text-centered">72.3</td>
+              <td class="has-text-centered">80.2</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B 1AO</b> w/o CR</td>
+              <td class="has-text-centered">66.4</td>
+              <td class="has-text-centered">79.4</td>
+              <td class="has-text-centered">67.5</td>
+              <td class="has-text-centered">75.9</td>
+              <td class="has-text-centered">76.2</td>
+              <td class="has-text-centered">73.1</td>
+              <td class="has-text-centered">79.3</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B-1AO</b></td>
+              <td class="has-text-centered">67.0</td>
+              <td class="has-text-centered">78.2</td>
+              <td class="has-text-centered">68.7</td>
+              <td class="has-text-centered">77.3</td>
+              <td class="has-text-centered">76.2</td>
+              <td class="has-text-centered"><u>73.5</u></td>
+              <td class="has-text-centered"><u>81.0</u></td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B 3AO</b> w/o CR</td>
+              <td class="has-text-centered">64.9</td>
+              <td class="has-text-centered"><u>79.4</u></td>
+              <td class="has-text-centered"><b>70.0</b></td>
+              <td class="has-text-centered">77.3</td>
+              <td class="has-text-centered"><b>79.0</b></td>
+              <td class="has-text-centered">74.1</td>
+              <td class="has-text-centered">80.5</td>
+            </tr>
+            <tr style="background-color: #e3f2fd;">
+              <td><b>CCPO-7B-3AO</b></td>
+              <td class="has-text-centered"><b>68.3</b></td>
+              <td class="has-text-centered">78.7</td>
+              <td class="has-text-centered"><u>69.6</u></td>
+              <td class="has-text-centered"><u>77.3</u></td>
+              <td class="has-text-centered"><u>78.0</u></td>
+              <td class="has-text-centered"><b>74.4</b></td>
+              <td class="has-text-centered"><b>81.4</b></td>
+            </tr>
+            <!-- <tr style="border-top: 2px solid #dbdbdb;">
               <td><b>Qwen2.5-VL-7B</b> w/ SFT</td>
               <td class="has-text-centered">64.84</td>
               <td class="has-text-centered">77.48</td>
@@ -1068,7 +1270,7 @@
               <td class="has-text-centered"><u>78.02</u></td>
               <td class="has-text-centered"><b>74.37</b></td>
               <td class="has-text-centered"><b>81.38</b></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
         <p class="content has-text-centered">
@@ -1077,6 +1279,14 @@
       </div>
     </div>
 
+
+
+
+    
+
+
+
+    
         <!-- AC Datasets Performance Comparison -->
     <div class="content-block">
       <h3 class="title is-4">Performance Comparison for AC Datasets</h3>
@@ -1145,7 +1355,7 @@
           </tbody>
         </table>
         <p class="content has-text-centered">
-          <strong>Table 4.</strong> Performance comparison for AC datasets from 1AO to 4AO.
+          <strong>Table 6.</strong> Performance comparison for AC datasets from 1AO to 4AO.
         </p>
       </div>
     </div>
@@ -1153,14 +1363,137 @@
   </div>
 </section>
 
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Qualitative Comparison</h2>
+    <div class="columns is-multiline qualitative-comparison-container">
+      <!-- Case 1 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 1</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/Case1_SFT.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/Case1_CCPO.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 2 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 2</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/Case2_SFT.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/Case2_CCPO.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 3 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 3</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/Case3_SFT.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/Case3_CCPO.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 4 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 4</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/case4_sft.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/case4_ccpo.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 5 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 5</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/case5_sft.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/case5_ccpo.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 6 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 6</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/case6_sft.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/case6_ccpo.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 7 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 7</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/case7_sft.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/case7_ccpo.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!-- Case 8 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Case 8</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/case8_sft.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/case8_ccpo.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="content has-text-centered" style="margin-top: 10px;">
+      <strong>Figure 3.</strong> Qualitative comparison of our method against baselines.
+    </p>
+  </div>
+</section>
+
 <section class="section bibtex-section">
   <div class="container is-max-desktop">
     <h2 class="section-title">BibTeX</h2>
-    <pre><code>@article{author202xcompress2focus,
-  author    = {Author, First and Author, Second},
-  title     = {Compress2Focus: Your Paper Title},
-  journal   = {Conference Name},
-  year      = {202X},
+    <pre><code>@article{Anonymous2026compress2focus,
+  author    = {Anonymous},
+  title     = {Compress to Focus: Efficient Coordinate Compression for Policy Optimization in Multi-Turn GUI Agents},
+  journal   = {ACL},
+  year      = {2026},
 }</code></pre>
   </div>
 </section>
@@ -1190,6 +1523,45 @@
     </div>
   </div>
 </footer>
+
+<!-- Hover Preview -->
+<div id="hover-preview">
+  <img id="preview-image" src="" alt="Preview">
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.qualitative-comparison-container img');
+    const preview = document.getElementById('hover-preview');
+    const previewImg = document.getElementById('preview-image');
+
+    console.log(`Found ${images.length} images for hover preview.`);
+
+    const showPreview = (src) => {
+      previewImg.src = src;
+      preview.style.display = 'flex';
+    };
+
+    const hidePreview = () => {
+      preview.style.display = 'none';
+      previewImg.src = '';
+    };
+
+    // 鼠标进入图片时显示预览
+    images.forEach((img, index) => {
+      img.addEventListener('mouseenter', function() {
+        console.log(`Hovering image ${index}: ${this.src}`);
+        showPreview(this.src);
+      });
+    });
+
+    // 鼠标离开放大的图片时隐藏预览
+    previewImg.addEventListener('mouseleave', hidePreview);
+    
+    // 点击预览区域任意位置也可关闭
+    preview.addEventListener('click', hidePreview);
+  });
+</script>
 
 </body>
 </html>
