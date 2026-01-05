@@ -87,8 +87,8 @@
     }
     
     #hover-preview img {
-      max-width: 95vw;
-      max-height: 95vh;
+      max-width: 90vw;
+      max-height: 90vh;
       object-fit: contain;
       border-radius: 8px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -1537,21 +1537,30 @@
 
     console.log(`Found ${images.length} images for hover preview.`);
 
-    const showPreview = (src) => {
-      previewImg.src = src;
+    const showPreview = (img) => {
+      previewImg.src = img.src;
+      
+      // 获取原图的显示宽度，并放大 2.5 倍
+      const rect = img.getBoundingClientRect();
+      const targetWidth = rect.width * 2.5;
+      
+      previewImg.style.width = `${targetWidth}px`;
+      previewImg.style.height = 'auto';
+      
       preview.style.display = 'flex';
     };
 
     const hidePreview = () => {
       preview.style.display = 'none';
       previewImg.src = '';
+      previewImg.style.width = ''; // 重置宽度
     };
 
     // 鼠标进入图片时显示预览
     images.forEach((img, index) => {
       img.addEventListener('mouseenter', function() {
         console.log(`Hovering image ${index}: ${this.src}`);
-        showPreview(this.src);
+        showPreview(this);
       });
     });
 
