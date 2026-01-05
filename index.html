@@ -405,29 +405,7 @@
     </div> -->
 
     <!-- Visualizations -->
-    <div class="content-block">
-      <h3 class="title is-4">Coordinate-Based Actions Distribution for Three Datasets</h3>
-      <div class="columns is-centered qualitative-comparison-container">
-        <div class="column has-text-centered">
-          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/GUI_O_distribution.png" alt="GUI Odyssey" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-          </div>
-          <p class="is-size-6 has-text-weight-bold mt-2">GUI Odyssey</p>
-        </div>
-        <div class="column has-text-centered">
-          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/AITW_distribution.png" alt="AITW" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-          </div>
-          <p class="is-size-6 has-text-weight-bold mt-2">AITW</p>
-        </div>
-        <div class="column has-text-centered">
-          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/AC_distribution.png" alt="Android Control" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-          </div>
-          <p class="is-size-6 has-text-weight-bold mt-2">Android Control</p>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Training Efficiency -->
     <div class="content-block">
@@ -1278,90 +1256,10 @@
         </p>
       </div>
     </div>
-
-
-
-
-    
-
-
-
-    
-        <!-- AC Datasets Performance Comparison -->
-    <div class="content-block">
-      <h3 class="title is-4">Performance Comparison for AC Datasets</h3>
-      <div class="table-container">
-        <table class="table is-fullwidth is-hoverable is-striped">
-          <thead>
-            <tr>
-              <th class="has-text-centered">Model</th>
-              <th class="has-text-centered">AO</th>
-              <th class="has-text-centered">TM</th>
-              <th class="has-text-centered">GR</th>
-              <th class="has-text-centered">SR</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="4" style="vertical-align: middle;"><i>Qwen2.5-VL-7B</i></td>
-              <td class="has-text-centered">1AO</td>
-              <td class="has-text-centered">83.75</td>
-              <td class="has-text-centered">74.95</td>
-              <td class="has-text-centered">67.97</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">2AO</td>
-              <td class="has-text-centered">85.30</td>
-              <td class="has-text-centered">75.95</td>
-              <td class="has-text-centered">70.00</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">85.94</td>
-              <td class="has-text-centered">75.95</td>
-              <td class="has-text-centered">70.60</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">4AO</td>
-              <td class="has-text-centered">84.89</td>
-              <td class="has-text-centered">75.77</td>
-              <td class="has-text-centered">69.65</td>
-            </tr>
-            <tr style="border-top: 2px solid #dbdbdb;">
-              <td rowspan="4" style="vertical-align: middle;"><i>CCPO-7B</i></td>
-              <td class="has-text-centered">1AO</td>
-              <td class="has-text-centered">86.45</td>
-              <td class="has-text-centered">78.80</td>
-              <td class="has-text-centered">72.18</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">2AO</td>
-              <td class="has-text-centered">86.86</td>
-              <td class="has-text-centered">79.48</td>
-              <td class="has-text-centered">73.19</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">3AO</td>
-              <td class="has-text-centered">86.89</td>
-              <td class="has-text-centered">79.71</td>
-              <td class="has-text-centered">73.25</td>
-            </tr>
-            <tr>
-              <td class="has-text-centered">4AO</td>
-              <td class="has-text-centered">86.27</td>
-              <td class="has-text-centered">80.20</td>
-              <td class="has-text-centered">73.11</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="content has-text-centered">
-          <strong>Table 6.</strong> Performance comparison for AC datasets from 1AO to 4AO.
-        </p>
-      </div>
-    </div>
-
   </div>
 </section>
+
+
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -1479,12 +1377,190 @@
           </div>
         </div>
       </div>
+       <!-- Failure Case 1 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Failure Case 1</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/failure_case1_sft_1.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/failure_case1_ccpo_1.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
+      <!--  Failure Case 2 -->
+      <div class="column is-half">
+        <div style="background-color: #f0f2f5; padding: 1.5rem; border-radius: 8px; height: 100%;">
+          <h4 class="title is-5 has-text-centered">Failure Case 2</h4>
+          <div style="margin-bottom: 1rem;">
+            <img src="img/failure_case2_sft_1.png" alt="SFT Baseline" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">SFT Baseline</p>
+          </div>
+          <div>
+            <img src="img/failure_case2_ccpo_1.png" alt="CCPO (Ours)" style="width: 100%; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <p class="has-text-centered has-text-weight-semibold mt-2">CCPO (Ours)</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="content has-text-centered" style="margin-top: 10px;">
-      <strong>Figure 3.</strong> Qualitative comparison of our method against baselines.
-    </p>
   </div>
 </section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Analysis</h2>
+    
+    <!-- Visualizations -->
+    <div class="content-block">
+      <h3 class="title is-4">Coordinate-Based Actions Distribution for Three Datasets</h3>
+      <div class="columns is-centered qualitative-comparison-container">
+        <div class="column has-text-centered">
+          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/GUI_O_distribution.png" alt="GUI Odyssey" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+          </div>
+          <p class="is-size-6 has-text-weight-bold mt-2">GUI Odyssey</p>
+        </div>
+        <div class="column has-text-centered">
+          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/AITW_distribution.png" alt="AITW" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+          </div>
+          <p class="is-size-6 has-text-weight-bold mt-2">AITW</p>
+        </div>
+        <div class="column has-text-centered">
+          <div style="height: 250px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/AC_distribution.png" alt="Android Control" style="max-height: 100%; max-width: 100%; width: auto; height: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+          </div>
+          <p class="is-size-6 has-text-weight-bold mt-2">Android Control</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AC Datasets Performance Comparison -->
+    <div class="content-block">
+      <h3 class="title is-4">Performance Comparison for AC Datasets</h3>
+      <div class="table-container">
+        <table class="table is-fullwidth is-hoverable is-striped">
+          <thead>
+            <tr>
+              <th class="has-text-centered">Model</th>
+              <th class="has-text-centered">AO</th>
+              <th class="has-text-centered">TM</th>
+              <th class="has-text-centered">GR</th>
+              <th class="has-text-centered">SR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="4" style="vertical-align: middle;"><i>Qwen2.5-VL-7B</i></td>
+              <td class="has-text-centered">1AO</td>
+              <td class="has-text-centered">83.75</td>
+              <td class="has-text-centered">74.95</td>
+              <td class="has-text-centered">67.97</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">2AO</td>
+              <td class="has-text-centered">85.30</td>
+              <td class="has-text-centered">75.95</td>
+              <td class="has-text-centered">70.00</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">3AO</td>
+              <td class="has-text-centered">85.94</td>
+              <td class="has-text-centered">75.95</td>
+              <td class="has-text-centered">70.60</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">4AO</td>
+              <td class="has-text-centered">84.89</td>
+              <td class="has-text-centered">75.77</td>
+              <td class="has-text-centered">69.65</td>
+            </tr>
+            <tr style="border-top: 2px solid #dbdbdb;">
+              <td rowspan="4" style="vertical-align: middle;"><i>CCPO-7B</i></td>
+              <td class="has-text-centered">1AO</td>
+              <td class="has-text-centered">86.45</td>
+              <td class="has-text-centered">78.80</td>
+              <td class="has-text-centered">72.18</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">2AO</td>
+              <td class="has-text-centered">86.86</td>
+              <td class="has-text-centered">79.48</td>
+              <td class="has-text-centered">73.19</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">3AO</td>
+              <td class="has-text-centered">86.89</td>
+              <td class="has-text-centered">79.71</td>
+              <td class="has-text-centered">73.25</td>
+            </tr>
+            <tr>
+              <td class="has-text-centered">4AO</td>
+              <td class="has-text-centered">86.27</td>
+              <td class="has-text-centered">80.20</td>
+              <td class="has-text-centered">73.11</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="content has-text-centered">
+          <strong>Table 6.</strong> Performance comparison for AC datasets from 1AO to 4AO.
+        </p>
+      </div>
+    </div>
+
+    <!-- Ablation Study -->
+    <div class="content-block">
+      <h3 class="title is-4">Ablation Study</h3>
+      <div class="table-container">
+        <table class="table is-fullwidth is-hoverable is-striped">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th class="has-text-centered">AC-TM</th>
+              <th class="has-text-centered">AC-GR</th>
+              <th class="has-text-centered">AC-SR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Qwen2.5VL-7B SFT</td>
+              <td class="has-text-centered">85.94</td>
+              <td class="has-text-centered">75.95</td>
+              <td class="has-text-centered">70.60</td>
+            </tr>
+            <tr>
+              <td style="padding-left: 2em;">+ Semi-online</td>
+              <td class="has-text-centered">86.27 <span style="font-size: 0.8em; color: teal;">(+0.33)</span></td>
+              <td class="has-text-centered">77.93 <span style="font-size: 0.8em; color: teal;">(+1.98)</span></td>
+              <td class="has-text-centered">72.35 <span style="font-size: 0.8em; color: teal;">(+1.75)</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 2em;">+ CASC</td>
+              <td class="has-text-centered">86.72 <span style="font-size: 0.8em; color: teal;">(+0.78)</span></td>
+              <td class="has-text-centered">79.12 <span style="font-size: 0.8em; color: teal;">(+3.17)</span></td>
+              <td class="has-text-centered">72.70 <span style="font-size: 0.8em; color: teal;">(+2.1)</span></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 2em;">+ CASC + CR</td>
+              <td class="has-text-centered">86.89 <span style="font-size: 0.8em; color: teal;">(+0.95)</span></td>
+              <td class="has-text-centered">79.71 <span style="font-size: 0.8em; color: teal;">(+3.76)</span></td>
+              <td class="has-text-centered">73.25 <span style="font-size: 0.8em; color: teal;">(+2.65)</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="content has-text-centered">
+          <strong>Table 7.</strong> Ablation study of different components on the Android Control dataset.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <section class="section bibtex-section">
   <div class="container is-max-desktop">
